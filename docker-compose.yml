@@ -1,0 +1,44 @@
+﻿services:
+  #WebUI (App)
+  webui:
+    build:
+      context: .
+      dockerfile: FleetManagement.WebUI/Dockerfile
+    container_name: fleet-management-web-ui 
+    ports:
+      - "5000:8080"
+      - "5001:8081"
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ChallengeDB;User Id=sa;Password=@Administrator123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False;
+
+  #API
+  api:
+    build:
+      context: .
+      dockerfile: FleetManagement.API/Dockerfile
+    container_name: fleet-management-api 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ChallengeDB;User Id=sa;Password=@Administrator123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False;
+
+  # SQL Server
+  db: 
+    build:
+      context: .
+      dockerfile: ms_sql_server/Dockerfile
+    container_name: mssql-server 
+    environment: 
+      - ACCEPT_EULA=Y 
+      - MSSQL_SA_PASSWORD=@Administrator123
+    ports: 
+      - "1433:1433" 
+    volumes: 
+      - db_data:/var/opt/mssql
+volumes:
+  db_data:

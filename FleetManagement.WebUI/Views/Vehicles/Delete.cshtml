@@ -1,0 +1,60 @@
+﻿@model FleetManagement.Application.DTOs.VehicleOutputDTO
+
+<h3>Delete Vehicle</h3>
+
+<div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Chassis)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Chassis)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChassisSeries)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChassisSeries)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ChassisNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ChassisNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ColorName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ColorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VehicleTypeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleTypeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VehicleTypePassengersCapacity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleTypePassengersCapacity)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Chassis" />
+        <input type="hidden" asp-for="ChassisSeries" />
+        <input type="hidden" asp-for="ChassisNumber" />
+        <input type="hidden" asp-for="ColorId" />
+        <input type="hidden" asp-for="ColorName" />
+        <input type="hidden" asp-for="VehicleTypeId" />
+        <input type="hidden" asp-for="VehicleTypeName" />
+        <input type="hidden" asp-for="VehicleTypePassengersCapacity" />
+        <input type="submit" value="Delete" class="btn btn-danger" @(ViewData.ModelState.IsValid ? "" : "disabled") /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+
