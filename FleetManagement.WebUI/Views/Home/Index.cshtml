@@ -1,0 +1,22 @@
+﻿<div class="watermark-container">
+    <img src="~/images/volvo-logo.svg" alt="Logo da Volvo" class="watermark-image">
+</div>
+
+<style>
+    .watermark-container {
+        position: relative;
+        width: 100%;
+        height: 100vh; /* Ajuste conforme necessário */
+        overflow: hidden;
+    }
+
+    .watermark-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.1; /* Transparência da marca d'água */
+        max-width: 100%; /* Dobro do tamanho original */
+        max-height: 100%; /* Dobro do tamanho original */
+    }
+</style>
