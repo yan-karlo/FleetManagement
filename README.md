@@ -23,8 +23,17 @@ Esta seção descreve as suposições feitas durante o desenvolvimento do projet
 
 - **.NET Core SDK**: Versão 3.1 ou superior instalada.
 - **Docker**: Usado para Containerização recomendada.
+- **SQL Server**: Usado como SGBD padrão.
+- **Visual Studio**: Usado como IDE padrão.
+- **Swagger**: Usado para documentação da API.
+- **Entity Framework Core**: Usado para mapeamento objeto-relacional.
+- **Docker Compose**: Usado para gerenciar múltiplos containeres.
+- **Dockerfile**: Usado para criar imagens de containeres.
 
 ---
+
+## DER :
+![Diagrama Entidade-Relacionamento](.\FleetManagement.WebUI\wwwroot\images\der.png)
 
 ### 1. Procedimentos Gerais
 
@@ -49,13 +58,17 @@ Esta seção descreve as suposições feitas durante o desenvolvimento do projet
    docker-compose up -d
    ```
 
-4. **Aplicar as Migrações**:
+4. **Aplicar Migrations: (Importante)**
 
-   Depois de subir os containers, esse processo também pode ser feito de pelo Visual Studio:
+    <span style="background-color: red; color: white; padding: 2px 4px; border-radius: 4px;">As migrations são aplicadas AUTOMATICAMENTE sempre que o projeto FleetManagement.WebUI for iniciado e que for constatdo que o banco de dados não foi instanciado.</span>
 
-   1. Navegue pelos menus: Tools -> NuGet Package Manager -> NuGet Package Manager Console
-   2. Na borda superior da janela deste console, selecione "FleetManagement.WebUI" como projeto default.
-   3. Digite o comando : `update-database`
+    Se por algum motivo precisar aplicar alguma migration, siga os passos abaixo:
+
+        Depois de subir os containers, esse processo também pode ser feito de pelo Visual Studio:
+
+        1. Navegue pelos menus: Tools -> NuGet Package Manager -> NuGet Package Manager Console
+        2. Na borda superior da janela deste console, selecione "FleetManagement.WebUI" como projeto default.
+        3. Digite o comando : `update-database`
 
 5. **Acessar as Aplicações**:
 
@@ -105,13 +118,17 @@ Esta seção descreve as suposições feitas durante o desenvolvimento do projet
    dotnet restore
    ```
 
-5. **Aplicar as Migrações**:
+5. **Aplicar Migrations: (Importante)**
 
-   Configure o esquema do banco de dados executando:
+    <span style="background-color: red; color: white; padding: 2px 4px; border-radius: 4px;">As migrations são aplicadas AUTOMATICAMENTE sempre que o projeto FleetManagement.WebUI for iniciado e que for constatdo que o banco de dados não foi instanciado.</span>
 
-   ```sh
-   dotnet ef database update
-   ```
+    Se por algum motivo precisar aplicar alguma migration, siga os passos abaixo:
+
+      Depois de subir os containers, esse processo também pode ser feito de pelo Visual Studio ou através do comando abaixo:
+
+      ```sh
+        dotnet ef database update
+      ```
 
 6. **Fazer o build**:
 
@@ -188,15 +205,17 @@ As aplicações estarão disponíveis nos containers em: - Fleet Management Web 
    dotnet restore
    ```
 
-6. **Aplicar as Migrações**:
+6. **Aplicar Migrations: (Importante)**
 
-   No terminal integrado da IDE, aplique as migrações:
+    <span style="background-color: red; color: white; padding: 2px 4px; border-radius: 4px;">As migrations são aplicadas AUTOMATICAMENTE sempre que o projeto FleetManagement.WebUI for iniciado e que for constatdo que o banco de dados não foi instanciado.</span>
 
-   Depois de subir os containers, esse processo também pode ser feito de pelo Visual Studio:
+    Se por algum motivo precisar aplicar alguma migration, siga os passos abaixo:
 
-   1. Navegue pelos menus: Tools -> NuGet Package Manager -> NuGet Package Manager Console
-   2. Na borda superior da janela deste console, selecione "FleetManagement.WebUI" como projeto default.
-   3. Digite o comando : `update-database`
+        Depois de subir os containers, esse processo também pode ser feito de pelo Visual Studio:
+
+        1. Navegue pelos menus: Tools -> NuGet Package Manager -> NuGet Package Manager Console
+        2. Na borda superior da janela deste console, selecione "FleetManagement.WebUI" como projeto default.
+        3. Digite o comando : `update-database`
 
 7. **Rodar o Projeto**:
 

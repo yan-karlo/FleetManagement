@@ -9,11 +9,14 @@
       - "5000:8080"
       - "5001:8081"
     command: >
-      sh -c "dotnet ef database update --project FleetManagement.Infra.Data && dotnet FleetManagement.WebUI.dll"
+      sh -c "until /opt/mssql-tools/bin/sqlcmd -S mssql-server -U SA -P 'YourPassword123!' -Q 'SELECT 1'; 
+             do echo waiting for database; sleep 2; done; 
+             dotnet FleetManagement.WebUI.dll"
     depends_on:
       - db
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=ChallengeDB;User Id=sa;Password=@Administrator123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False;
+
 
   #API
   api:
@@ -42,5 +45,11 @@
       - "1433:1433" 
     volumes: 
       - db_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '@Administrator123' -Q 'SELECT 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   db_data:
