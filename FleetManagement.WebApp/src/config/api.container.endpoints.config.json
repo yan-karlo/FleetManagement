@@ -1,0 +1,5 @@
+{
+  "colors": "http://localhost:8080/api/Colors",
+  "vehicles": "http://localhost:8080/api/Vehicles",
+  "vehicleTypes": "http://localhost:8080/api/vehicle-types"
+}

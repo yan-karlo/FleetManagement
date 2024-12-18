@@ -1,0 +1,106 @@
+<app-spinner [isVisible]="checkLoading.isOngoing()"></app-spinner>
+@if(checkLoading.isResponseOngoing()){
+    <h2 class="text-center">Vehicle Form:</h2>
+    <h3 class="text-center">Wait... Loading data ...</h3>
+} @else if(checkLoading.isRequestOngoing()){
+    <h2 class="text-center">Vehicle Form:</h2>
+    <h3 class="text-center">Wait... Saving data ...</h3>
+} @else if(checkLoading.isUnsuccessfulResponse()){
+    <h2 class="text-center">Vehicle Form:</h2>
+    <h3 class="text-center text-danger">Something went wrong when retrieving data.</h3>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 mt-4 d-flex gap-2">
+            <a [routerLink]="['/vehicles']" class="btn btn-info col-md-2 mt-8">
+                <i class="fas fa-arrow-left me-2"></i>
+                Back to List
+            </a>
+            <button (click)="onTryAgain()" class="btn btn-warning col-md-2 mt-8">
+                <i class="fas fa-redo me-2"></i>
+                Try Again
+            </button>
+        </div>
+    </div>
+} @else {
+    <app-form-title [formAction]="formAction" [entity]="'Vehicle'"></app-form-title>
+    @if(checkLoading.isUnsuccessfulRequest()){
+        <h4 class="text-danger">Something went wrong when saving the data.</h4>
+    }
+    <form (ngSubmit)="onSubmit()" [formGroup]="vehicleForm" class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <label for="chassisSeries" class="col-md-3 control-label">Chassis Series:</label>
+            <div class="col-md-5">
+                <input type="text" id="chassisSeries" name="chassisSeries" formControlName="chassisSeries" (keydown)="updateLoadingStatus()" required class="form-control"/>
+                @if(vehicleForm.get('chassisSeries')?.invalid && vehicleForm.get('chassisSeries')?.touched){
+                    @if(vehicleForm.get('chassisSeries')?.errors?.['required']){
+                        <span class="text-danger">Name is required.</span>
+                    }
+                    @if(vehicleForm.get('chassisSeries')?.errors?.['maxlength']){
+                        <span class="text-danger">The maximum length allowed is 30 characters.</span>
+                    }
+                    @if(vehicleForm.get('chassisSeries')?.errors?.['minlength']){
+                        <span class="text-danger">The minimum length allowed is 3 characters.</span>
+                    }
+                }
+            </div>
+            <label for="chassisNumber" class="col-md-3 mt-4 control-label">Chassis Number:</label>
+            <div class="col-md-10">
+                <input
+                    type="text"
+                    id="chassisNumber"
+                    name="chassisNumber"
+                    formControlName="chassisNumber"
+                    [value]="vehicleForm.get('chassisNumber')?.value"
+                    (keydown)="allowNumbersOnly($event)"
+                    (paste)="allowPasteNumbersOnly($event)"
+                    maxlength="19"
+                    required
+                    class="form-control"
+                />
+                @if(vehicleForm.get('chassisNumber')?.invalid && vehicleForm.get('chassisNumber')?.touched){
+                    @if(vehicleForm.get('chassisNumber')?.errors?.['required']){
+                        <span class="text-danger">chassis Number is required.</span>
+                    }
+                    @if(vehicleForm.get('chassisNumber')?.errors?.['max']){
+                        <span class="text-danger">The maximum number was exceeded.</span>
+                    }
+                    @if(vehicleForm.get('chassisNumber')?.errors?.['min']){
+                        <span class="text-danger">The lowest chassis number  is 1.</span>
+                    }
+                }
+            </div>
+            <label for="colorId" class="col-md-3 mt-4 control-label">Color:</label>
+            <div class="col-md-10">
+                 <select
+                    id="colorId"
+                    formControlName="colorId"
+                    class="form-control"
+                    [disabled]="isDisabled"
+                >
+                    @for(color of colors; track color.id){
+                        <option [value]="color.id">{{color.name}}</option>
+                    }
+                </select>
+            </div>
+            <label for="vehicleTypeId" class="col-md-3 mt-4 control-label">Vehicle Type:</label>
+            <div class="col-md-10">
+                 <select
+                    id="vehicleTypeId"
+                    formControlName="vehicleTypeId"
+                    class="form-control"
+                    [disabled]="isDisabled"
+                >
+                    @for(type of vehicleTypes; track type.id){
+                        <option [value]="type.id">{{type.name}} - {{type.passengersCapacity}} passenger(s)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <app-save-delete-try-again-buttons-bundle
+            [formGroup]="vehicleForm"
+            [formAction]="formAction"
+            [backLink]="'/vehicles'"
+            (onSubmit)="onSubmit()"
+        ></app-save-delete-try-again-buttons-bundle>
+    </form>
+}

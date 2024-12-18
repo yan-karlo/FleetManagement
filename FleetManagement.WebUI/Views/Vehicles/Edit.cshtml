@@ -1,0 +1,55 @@
+﻿@model FleetManagement.Application.DTOs.VehicleOutputDTO
+
+@{
+    ViewData["Title"] = "Edit Vehicle";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="edit" method="post" >
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Chassis" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input disabled asp-for="Chassis" class="form-control" />
+                <span asp-validation-for="Chassis" class="text-danger"></span>
+            </div>
+            <label asp-for="ChassisSeries" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ChassisSeries" class="form-control" />
+                <span asp-validation-for="ChassisSeries" class="text-danger"></span>
+            </div>
+            <label asp-for="ChassisNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ChassisNumber" class="form-control" />
+                <span asp-validation-for="ChassisNumber" class="text-danger"></span>
+            </div>
+            <label asp-for="ColorName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="ColorId" class="form-control" asp-items="ViewBag.ColorId"></select>
+            </div>
+            <label asp-for="VehicleTypeName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="VehicleTypeId" class="form-control" asp-items="ViewBag.VehicleTypeId"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Chassis" />
+            <input type="hidden" asp-for="ChassisSeries" />
+            <input type="hidden" asp-for="ChassisNumber" />
+            <input type="hidden" asp-for="ColorId" />
+            <input type="hidden" asp-for="ColorName" />
+            <input type="hidden" asp-for="VehicleTypeId" />
+            <input type="hidden" asp-for="VehicleTypeName" />
+            <input type="hidden" asp-for="VehicleTypePassengersCapacity" />
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" @(ViewData.ModelState.IsValid ? "" : "disabled") />
+                <a asp-action="Index" class="btn btn-info">Back to List</a>
+            </div>
+        </div>
+    </div>
+</form>

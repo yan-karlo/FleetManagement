@@ -1,0 +1,11 @@
+<div>
+    @if(formAction === "update"){
+        <h2>{{ entity }} Update</h2>
+    } @else if(formAction === "add") {
+        <h2>Creating a New {{ entity }}</h2>
+    } @else if(formAction === "detail") {
+        <h2>{{ entity }} Deletion</h2>
+    } @else {
+        <h2>Deleting The {{ entity }}</h2>
+    }
+</div>

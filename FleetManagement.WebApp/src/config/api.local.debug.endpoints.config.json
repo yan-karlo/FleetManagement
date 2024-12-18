@@ -1,0 +1,5 @@
+{
+  "colors": "https://localhost:7243/api/colors",
+  "vehicles": "https://localhost:7243/api/Vehicles",
+  "vehicleTypes": "https://localhost:7243/api/vehicle-types"
+}

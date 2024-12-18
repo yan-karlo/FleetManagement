@@ -1,0 +1,20 @@
+<div class="table-responsive">
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th *for="let header of headers; trackBy: trackHeader">{{ header }}</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *for="let row of data; trackBy: trackRow">
+        <td *for="let cell of row; trackBy: trackCell">{{ cell }}</td>
+        <td>
+          <!--<button class="btn btn-primary btn-sm" (click)="onDetails(row)">Details</button>
+          <button class="btn btn-warning btn-sm" (click)="onEdit(row)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="onDelete(row)">Delete</button>-->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

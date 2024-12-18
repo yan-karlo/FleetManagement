@@ -1,0 +1,52 @@
+﻿services:
+ #WebApp (Angular)
+  webapp:
+    build:
+      context: .
+      dockerfile: FleetManagement.WebApp/Dockerfile
+    container_name: fleet-management-webapp
+    ports:
+      - "61297:61297"
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+    depends_on:
+      - api 
+    command: >
+      sh -c "npm install && ng serve --host 0.0.0.0"
+
+
+  #API
+  api:
+    build:
+      context: .
+      dockerfile: FleetManagement.API/Dockerfile
+    container_name: fleet-management-api 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=ChallengeDB;User Id=sa;Password=@Administrator123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False;
+
+  # SQL Server
+  db: 
+    build:
+      context: .
+      dockerfile: ms_sql_server/Dockerfile
+    container_name: mssql-server 
+    environment: 
+      - ACCEPT_EULA=Y 
+      - MSSQL_SA_PASSWORD=@Administrator123
+    ports: 
+      - "1433:1433" 
+    volumes: 
+      - db_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P '@Administrator123' -Q 'SELECT 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

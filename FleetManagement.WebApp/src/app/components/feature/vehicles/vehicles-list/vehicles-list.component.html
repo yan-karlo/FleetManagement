@@ -1,0 +1,77 @@
+<app-spinner [isVisible]="checkLoading.isOngoing()"></app-spinner>
+<div class="container mt-5">
+    @if(checkLoading.isOngoing()){
+        <h2 class="text-center">List of Vehicle:</h2>
+        <h2 class="text-center">Wait... Loading data...</h2>
+    } @else if(checkLoading.isUnsuccessfulResponse()){
+        <h2 class="text-center">List of Vehicle Types:</h2>
+        <h3 class="text-center error">Something went wrong when retrieving data. </h3>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 mt-2 d-flex gap-2">
+                <a [routerLink]="['/home']" class="btn btn-info col-md-2 mt-8">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Back to List
+                </a>
+            </div>
+        </div>
+    } @else {
+        <div>
+            <h2>List of Vehicle</h2>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+            <div>
+                <div class="pull-left">
+                <a class="btn btn-primary"  [routerLink]="['/vehicles','add']">
+                    <span title="Register New" class="fas fa-plus"></span> Register New
+                </a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <br />
+        <div class="panel panel-default">
+            <table class="table table-striped">
+            <thead>
+                <tr>
+                <th>Chassis</th>
+                <th>Chassis Series</th>
+                <th>Chassis Number</th>
+                <th>Vehicle Type</th>
+                <th>Color</th>
+                <th>Passengers Capacity</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of data; track row.id) {
+                <tr>
+                <td>{{ row.chassis }}</td>
+                <td>{{ row.chassisSeries }}</td>
+                <td>{{ row.chassisNumber }}</td>
+                <td>{{ row.vehicleTypeName }}</td>
+                <td>{{ row.colorName }}</td>
+                <td>{{ row.vehicleTypePassengersCapacity }}</td>
+                <td class="text-end">
+                    <a title="Edit" class="btn btn-warning me-2" [routerLink]="['/vehicles/', 'update', row.id]">
+                    <span class="fas fa-edit"></span>
+                    </a>
+
+                    <a title="Details" class="btn btn-primary me-2" [routerLink]="['/vehicles/','detail', row.id]">
+                    <span class="fas fa-search"></span>
+                    </a>
+
+                    <a title="Delete" class="btn btn-danger me-2" [routerLink]="['/vehicles/','delete', row.id]">
+                    <span class="fas fa-trash-alt"></span>
+                    </a>
+                </td>
+                </tr>
+                } @empty {
+                <p>No vehicles to be listed, yet.</p>
+                }
+            </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,25 @@
+{
+    "colors":{
+        "list"  : "/colors",
+        "add"   : "colors/:action",
+        "update": "colors/:action/:id",
+        "delete": "colors/:action/:id",
+        "detail": "colors/:action/:id"
+    },
+
+    "vehicles": {
+        "list"  : "/vehicles",
+        "add"   : "vehicles/:action",
+        "update": "vehicles/:action/:id",
+        "delete": "vehicles/:action/:id",
+        "detail": "vehicles/:action/:id"
+    },
+
+    "vehicleTypes": {
+        "list" : "/vehicleTypes",
+        "add"   : "vehicleTypes/:action",
+        "update": "vehicleTypes/:action/:id",
+        "delete": "vehicleTypes/:action/:id",
+        "detail": "vehicleTypes/:action/:id"
+    }
+}

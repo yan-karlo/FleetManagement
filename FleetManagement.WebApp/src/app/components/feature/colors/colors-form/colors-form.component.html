@@ -1,0 +1,54 @@
+<app-spinner [isVisible]="checkLoading.isOngoing()"></app-spinner>
+@if(checkLoading.isResponseOngoing()){
+    <h2 class="text-center">Colors Form:</h2>
+    <h3 class="text-center">Wait... Loading data ...</h3>
+} @else if(checkLoading.isRequestOngoing()){
+    <h2 class="text-center">Colors Form:</h2>
+    <h3 class="text-center">Wait... Saving data ...</h3>
+} @else if(checkLoading.isUnsuccessfulResponse()){
+    <h2 class="text-center">Colors Form:</h2>
+    <h3 class="text-center error">Something went wrong when retrieving data.</h3>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 mt-4 d-flex gap-2">
+            <a [routerLink]="['/colors']" class="btn btn-info col-md-2 mt-8">
+                <i class="fas fa-arrow-left me-2"></i>
+                Back to List
+            </a>
+            <button (click)="onTryAgain()" class="btn btn-warning col-md-2 mt-8">
+                <i class="fas fa-redo me-2"></i>
+                Try Again
+            </button>
+        </div>
+    </div>
+} @else {
+    <app-form-title [formAction]="formAction" [entity]="'Color'"></app-form-title>
+    @if(checkLoading.isUnsuccessfulRequest()){
+        <h4 class="error">Something went wrong when saving the data.</h4>
+    }
+    <form (ngSubmit)="onSubmit()" [formGroup]="colorForm" class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            <label for="name" class="col-md-2 control-label">Name</label>
+            <div class="col-md-10">
+                <input type="text" id="name" name="name" formControlName="name" (keydown)="updateLoadingStatus()" [disabled]="isDisabled" required class="form-control"/>
+            </div>
+            @if(colorForm.get('name')?.invalid && colorForm.get('name')?.touched){
+                @if(colorForm.get('name')?.errors?.['required']){
+                    <span class="text-danger">Name is required.</span>
+                }
+                @if(colorForm.get('name')?.errors?.['maxlength']){
+                    <span class="text-danger">The maximum length allowed is 30 characters.</span>
+                }
+                @if(colorForm.get('name')?.errors?.['minlength']){
+                    <span class="text-danger">The minimum length allowed is 3 characters.</span>
+                }
+            }
+        </div>
+        <app-save-delete-try-again-buttons-bundle
+            [formGroup]="colorForm"
+            [formAction]="formAction"
+            [backLink]="'/colors'"
+            (onSubmit)="onSubmit()"
+        ></app-save-delete-try-again-buttons-bundle>
+   </form>
+}
