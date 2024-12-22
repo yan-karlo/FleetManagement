@@ -1,4 +1,6 @@
+using FleetManagement.Infra.Data.Context;
 using FleetManagement.Infra.IoC;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,27 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 var app = builder.Build();
+
+// Applying migrations and seeding the database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+
+        // Apply pending migrations, including seeding
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            Console.WriteLine("Applying migrations (including seeding)...");
+            context.Database.Migrate();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred during database initialization: {ex.Message}");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
